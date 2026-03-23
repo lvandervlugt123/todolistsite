@@ -7,7 +7,7 @@ This to-do list app helps you keep track of tasks in one place. You can add task
 
 ## How to use it
 
-Open `todolist.html` in your browser.
+Open https://lvandervlugt123.github.io/todolistsite/ in your browser.
 
 - Type a task into the input field and click **Add**.
 - Choose a priority level: High, Medium, or Low.
