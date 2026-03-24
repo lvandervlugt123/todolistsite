@@ -282,6 +282,38 @@ button:active { transform: scale(0.96); }
   border-color: #f3f4f6;
 }
 
+/* ── Completion celebration ── */
+.celebration-burst {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 250;
+}
+
+.celebration-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  opacity: 0;
+  animation: confetti-burst 850ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes confetti-burst {
+  0% {
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(1.05) rotate(var(--rotate));
+    opacity: 0;
+  }
+}
+
 /* ── Custom checkbox ── */
 .task-checkbox {
   appearance: none;
