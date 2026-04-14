@@ -7,14 +7,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem('theme-preference');
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        document.documentElement.dataset.theme = savedTheme || preferredTheme;
+      })();
+    </script>
     <link rel="stylesheet" href="css/styles.css" />
   </head>
 
   <body>
     <main>
       <header class="app-header">
-        <h1>My <span>Tasks</span></h1>
-        <p class="app-subtitle">Stay organised. Click a task to add details.</p>
+        <div class="header-top-row">
+          <div>
+            <h1>My <span>Tasks</span></h1>
+            <p class="app-subtitle">Stay organised. Click a task to add details.</p>
+          </div>
+          <label class="theme-toggle" for="theme-toggle" aria-label="Toggle dark mode">
+            <input type="checkbox" id="theme-toggle" aria-label="Toggle between light mode and dark mode" />
+            <span class="theme-toggle-track">
+              <span class="theme-icon theme-icon-light" aria-hidden="true">☀️</span>
+              <span class="theme-toggle-thumb"></span>
+              <span class="theme-icon theme-icon-dark" aria-hidden="true">🌙</span>
+            </span>
+          </label>
+        </div>
       </header>
 
       <!-- Add task -->
@@ -113,6 +132,7 @@
       const statsEl     = document.getElementById('stats');
       const filterBtns  = document.querySelectorAll('.filter-btn');
       const resetBtn    = document.getElementById('reset-btn');
+      const themeToggle = document.getElementById('theme-toggle');
 
       // ── Modal refs ─────────────────────────────────────────────────────────
       const modalOverlay   = document.getElementById('modal-overlay');
@@ -125,6 +145,23 @@
       const modalCancelBtn = document.getElementById('modal-cancel-btn');
       const modalCloseBtn  = document.getElementById('modal-close-btn');
       let   activeModalId  = null;
+
+      // ── Theme ──────────────────────────────────────────────────────────────
+      function applyTheme(theme) {
+        document.documentElement.dataset.theme = theme;
+        if (themeToggle) {
+          themeToggle.checked = theme === 'dark';
+        }
+      }
+
+      const initialTheme = document.documentElement.dataset.theme || 'light';
+      applyTheme(initialTheme);
+
+      themeToggle?.addEventListener('change', () => {
+        const nextTheme = themeToggle.checked ? 'dark' : 'light';
+        applyTheme(nextTheme);
+        localStorage.setItem('theme-preference', nextTheme);
+      });
 
       // ── Helpers ────────────────────────────────────────────────────────────
       function escapeHtml(str) {
